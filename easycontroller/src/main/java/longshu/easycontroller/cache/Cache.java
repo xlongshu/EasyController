@@ -30,7 +30,7 @@ import java.util.Iterator;
 /**
  * Cache interface.
  */
-public interface Cache<K, V> {
+public interface Cache<K, V> extends Iterable<V> {
 
 	/**
 	 * Returns cache size or <code>0</code> if there is no size limit.
@@ -63,6 +63,7 @@ public interface Cache<K, V> {
 	/**
 	 * Returns iterator over non-expired values.
 	 */
+	@Override
 	Iterator<V> iterator();
 
 	/**

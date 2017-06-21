@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Values iterator for {@link jxau.bluedot.cache.AbstractCacheMap}.
+ * Values iterator for {@link AbstractCacheMap}.
  */
 public class CacheValuesIterator<V> implements Iterator<V> {
 
