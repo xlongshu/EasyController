@@ -31,8 +31,9 @@
                 <property name="username" value="${username}"/>
                 <property name="password" value="${password}"/>
 
-                <property name="maxActive" value="${druid.maxActive}"/>
                 <property name="initialSize" value="${druid.initialSize}"/>
+                <property name="maxActive" value="${druid.maxActive}"/>
+                <property name="minIdle" value="${druid.minIdle}"/>
                 <property name="maxWait" value="${druid.maxWait}"/>
                 <property name="filters" value="${druid.filters}"/>
             </dataSource>

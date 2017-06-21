@@ -21,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String name, String password) throws ServiceException {
+        if (StringUtils.isAnyBlank(name, password)) {
+            throw new ServiceException("用户名或密码不能为空!");
+        }
         User user = userDao.findByName(name);
         if (StringUtils.equals(user.getPassword(), password)) {
             return user;

@@ -9,7 +9,28 @@
     <title>用户列表</title>
 </head>
 <body>
-
-
+<div class="container">
+    <br/>
+    <a href="<c:url value='/test/'/>">返回</a>
+    <br/>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="user" items="${userList}">
+            <tr>
+                <td>${user.id}</td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

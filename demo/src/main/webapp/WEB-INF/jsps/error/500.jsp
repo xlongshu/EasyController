@@ -25,7 +25,7 @@
     </div>
 </div>
 <div id="footer">
-    ©2017 <a href="${pageContext.servletContext.contextPath}" target="_blank">首页</a> All rights reserved.
+    ©2017 <a href="${pageContext.servletContext.contextPath}">首页</a> All rights reserved.
 </div>
 </body>
 </html>

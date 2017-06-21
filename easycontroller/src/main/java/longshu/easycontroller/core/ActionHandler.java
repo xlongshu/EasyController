@@ -4,6 +4,7 @@ import longshu.easycontroller.core.aop.ActionInvocation;
 import longshu.easycontroller.core.config.ActionMapping;
 import longshu.easycontroller.core.config.Constants;
 import longshu.easycontroller.core.view.AbstractUrlView;
+import longshu.easycontroller.core.view.ForwardView;
 import longshu.easycontroller.core.view.RenderException;
 import longshu.easycontroller.core.view.View;
 import longshu.easycontroller.core.view.ViewManager;
@@ -58,9 +59,6 @@ public class ActionHandler {
             return false;
         }
 
-        // ContextPath
-//        request.setAttribute(Constants.me().getContextPathName(), contextPath);
-
         // 不处理带后缀的请求
         if (target.indexOf('.') != -1) {
             return false;
@@ -100,7 +98,7 @@ public class ActionHandler {
         logger.debug("view:{}", view);
 
         // ContextPath
-        if (view instanceof AbstractUrlView) {
+        if ((view instanceof AbstractUrlView) || (view instanceof ForwardView)) {
             request.setAttribute(Constants.me().getContextPathName(), contextPath);
         }
 

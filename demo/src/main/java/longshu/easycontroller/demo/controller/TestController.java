@@ -29,6 +29,10 @@ public class TestController extends Controller {
     public void index() {
     }
 
+    public String loginView() {
+        return View.FORWARD_URL_PREFIX + "/WEB-INF/jsps/login.jsp";
+    }
+
     @ActionKey(methods = HttpMethod.POST)
     public Object login() {
         User user = getBean(User.class);
@@ -40,7 +44,8 @@ public class TestController extends Controller {
             return getViewFactory().getForwardView("/WEB-INF/jsps/test/index.jsp");
         } catch (ServiceException e) {
             logger.warn(e.getMessage());
-            return getViewFactory().getForwardView("/WEB-INF/jsps/test/login.jsp");
+            request.setAttribute("msg", e.getMessage());
+            return getViewFactory().getForwardView("/WEB-INF/jsps/login.jsp");
         }
     }
 
