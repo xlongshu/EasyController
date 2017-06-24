@@ -21,7 +21,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.Reader;
-import java.io.Serializable;
 import java.sql.Connection;
 
 /**
@@ -29,20 +28,27 @@ import java.sql.Connection;
  *
  * @author LongShu 2017/06/20
  */
-public class DemoConfig extends ActionConfig implements Serializable {
+public class DemoConfig extends ActionConfig {
     private static final long serialVersionUID = 1L;
 
     @Override
     public void configConstant(Constants me) {
-        me.setDevMode(true);
+        prop = loadPropertyFile("demo.properties");
+        me.setDevMode(getPropToBoolean("devMode", false));
         me.setViewType(ViewType.JSP);
         me.setViewExtension(".jsp");
 
+        // 指定json实现
         me.setDefaultJson(new FastJson());
 
         me.setErrorView(404, "/WEB-INF/jsps/error/404.jsp");
         me.setErrorView(500, "/WEB-INF/jsps/error/500.jsp");
 
+        // 文件上传配置
+        me.addAllowUploadFileType(getProp("allowFileType"));
+        // 文件下载缓存配置
+        me.setFileCacheSize(getPropToInt("fileCacheSize", 80));
+        me.setMaxFileCachetSize(getPropToInt("maxFileCachetSize", 2 << 10));// 2M
     }
 
     @Override
@@ -55,7 +61,7 @@ public class DemoConfig extends ActionConfig implements Serializable {
     public void configInterceptor(Interceptors me) {
         // 全局拦截器
         me.addGlobalInterceptor(GlobalInterceptor.class);
-
+        // 给某个控制器指定拦截器
         me.addActionInterceptor(TestController.class, TestInterceptor.class);
     }
 

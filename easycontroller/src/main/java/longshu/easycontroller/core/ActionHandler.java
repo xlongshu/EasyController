@@ -86,7 +86,7 @@ public class ActionHandler {
         try {
             invocation.invoke();
             returnValue = invocation.getReturnValue();
-            logger.debug("returnValue:[{}]", returnValue);
+            logger.debug("returnValue: [{}]", returnValue);
         } catch (ActionException e) {
             logger.warn(e.getMessage(), e);
             ViewManager.me().getViewFactory().getErrorView(500).render(request, response);
@@ -95,7 +95,7 @@ public class ActionHandler {
 
         // resolveView
         View view = viewResolver.resolveView(action, returnValue);
-        logger.debug("view:{}", view);
+        logger.debug("view: [{}]", view);
 
         // ContextPath
         if ((view instanceof AbstractUrlView) || (view instanceof ForwardView)) {

@@ -16,7 +16,6 @@ public class TestInterceptor implements Interceptor {
     public void intercept(ActionInvocation invocation) {
         log.info("TestInterceptor:{} 执行前", invocation.getActionKey());
         invocation.invoke();
-        log.info("TestInterceptor:{} 执行后", invocation.getActionKey());
     }
 
 }

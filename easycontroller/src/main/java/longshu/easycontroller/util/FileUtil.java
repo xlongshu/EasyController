@@ -12,6 +12,7 @@ import java.util.UUID;
  * @author LongShu 2017/05/11
  */
 public class FileUtil {
+
     /**
      * The Unix separator character.
      */
@@ -21,39 +22,6 @@ public class FileUtil {
      * The Windows separator character.
      */
     public static final char WINDOWS_SEPARATOR = '\\';
-
-    /**
-     * 返回如: 2017/01/
-     */
-    public static String buildYearMonth() {
-        Date date = new Date();
-        return DateUtil.toStr(date, "yyyy/MM/");
-    }
-
-    /**
-     * 按照日期打乱
-     *
-     * @param basePath 文件存储路径
-     * @return 如 savePath/2017/01
-     */
-    public static File getSavePath(File basePath) {
-        File dir = new File(basePath, buildYearMonth());
-        if (!dir.exists()) {//如果文件夹不存在就创建
-            mkdirs(dir);
-        }
-        return dir;
-    }
-
-    /**
-     * 参数重载一个方法，由于保存是按照绝对路径的
-     * 并且我们按照日期打乱
-     *
-     * @param basePath
-     * @return
-     */
-    public static String getSavePath(String basePath) {
-        return getSavePath(new File(basePath)).getAbsolutePath();
-    }
 
     /**
      * 获取有后缀的文件名称
