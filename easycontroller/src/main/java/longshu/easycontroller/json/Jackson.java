@@ -1,11 +1,12 @@
 package longshu.easycontroller.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Jackson
@@ -14,26 +15,47 @@ import java.io.IOException;
  */
 public class Jackson extends Json {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static String datePattern;
+    private static boolean isInitDatePattern;
 
-    static {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)// null属性值不映射
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);//有属性不能映射的时候不报错
-    }
+    /**
+     * SimpleDateFormat创建成本高,所以静态成员化,配合ThreadLocal解决线程安全问题
+     */
+    private static ThreadLocal<DateFormat> dateFormat = new ThreadLocal<DateFormat>() {
+        @Override
+        protected synchronized DateFormat initialValue() {
+            return new SimpleDateFormat(datePattern);
+        }
+    };
 
     public static ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)// null属性值不映射
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);//有属性不能映射的时候不报错
         return objectMapper;
     }
 
     public static String toJson(Object object, boolean pretty) {
+        ObjectMapper objectMapper = getObjectMapper();
+
+        if (!isInitDatePattern) {
+            datePattern = defaultJson.getDatePattern() == null ? defaultDatePattern : defaultJson.getDatePattern();
+            isInitDatePattern = true;
+        }
+
+        if (datePattern != null) {
+            DateFormat format = Jackson.dateFormat.get();
+            objectMapper.setDateFormat(format);
+        }
+
         try {
             if (pretty) {
                 return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
             } else {
                 return objectMapper.writeValueAsString(object);
             }
-        } catch (JsonProcessingException e) {
-            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -44,10 +66,11 @@ public class Jackson extends Json {
 
     @Override
     public <T> T parse(String json, Class<T> type) {
+        ObjectMapper objectMapper = getObjectMapper();
         try {
             return objectMapper.readValue(json, type);
         } catch (IOException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

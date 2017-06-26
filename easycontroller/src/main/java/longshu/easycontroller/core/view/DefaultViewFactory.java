@@ -18,13 +18,13 @@ public class DefaultViewFactory implements ViewFactory {
         View view = null;
         switch (viewType) {
             case JSP:
-                view = new JspView(viewName);
+                view = getJspView(viewName);
                 break;
             case FREE_MARKER:
-                view = new FreeMarkerView(viewName);
+                view = getFreeMarkerView(viewName);
                 break;
             case VELOCITY:
-                view = new VelocityView(viewName);
+                view = getVelocityView(viewName);
                 break;
         }
         return view;

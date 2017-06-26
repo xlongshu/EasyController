@@ -10,11 +10,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  */
 public class FastJson extends Json {
 
-    private static SerializerFeature[] defaultFeatures = {SerializerFeature.WriteEnumUsingToString,
-            SerializerFeature.WriteDateUseDateFormat};
+    private static SerializerFeature[] defaultFeatures = {SerializerFeature.WriteEnumUsingToString};
 
-    private static SerializerFeature[] prettyFeatures = {SerializerFeature.WriteEnumUsingToString,
-            SerializerFeature.WriteDateUseDateFormat, SerializerFeature.PrettyFormat};
+    private static SerializerFeature[] prettyFeatures = {SerializerFeature.WriteEnumUsingToString, SerializerFeature.PrettyFormat};
 
     public static SerializerFeature[] getDefaultFeatures() {
         return defaultFeatures;
@@ -33,10 +31,11 @@ public class FastJson extends Json {
     }
 
     public static String toJson(Object object, boolean pretty) {
+        String dp = defaultJson.getDatePattern() == null ? defaultDatePattern : defaultJson.getDatePattern();
         if (pretty) {
-            return JSON.toJSONString(object, prettyFeatures);
+            return JSON.toJSONStringWithDateFormat(object, dp, prettyFeatures);
         }
-        return JSON.toJSONString(object, defaultFeatures);
+        return JSON.toJSONStringWithDateFormat(object, dp, defaultFeatures);
     }
 
     @Override

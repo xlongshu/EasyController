@@ -13,6 +13,7 @@ import longshu.easycontroller.demo.interceptor.TestInterceptor;
 import longshu.easycontroller.demo.module.MyBatisMapperModule;
 import longshu.easycontroller.demo.module.ServiceModule;
 import longshu.easycontroller.json.FastJson;
+import longshu.easycontroller.util.DateUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -39,7 +40,7 @@ public class DemoConfig extends ActionConfig {
         me.setViewExtension(".jsp");
 
         // 指定json实现
-        me.setDefaultJson(new FastJson());
+        me.setDefaultJson(new FastJson().setDatePattern(DateUtil.DATE_PATTERN));
 
         me.setErrorView(404, "/WEB-INF/jsps/error/404.jsp");
         me.setErrorView(500, "/WEB-INF/jsps/error/500.jsp");
