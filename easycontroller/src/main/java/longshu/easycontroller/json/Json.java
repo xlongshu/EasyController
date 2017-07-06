@@ -14,7 +14,7 @@ public abstract class Json {
     @Getter
     @Setter
     @NonNull
-    protected static Json defaultJson = new UnrealizedJson();
+    protected static Json defaultJson;
 
     @Getter
     @Setter
@@ -22,7 +22,25 @@ public abstract class Json {
     protected static String defaultDatePattern;
     protected String datePattern = null;
 
-    public abstract String toJson(Object object);
+    static {
+        try {
+            Class.forName("com.alibaba.fastjson.JSON");
+            defaultJson = new FastJson();
+        } catch (ClassNotFoundException ignored) {
+            try {
+                Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
+                defaultJson = new Jackson();
+            } catch (ClassNotFoundException e) {
+                defaultJson = new UnrealizedJson();
+            }
+        }
+    }
+
+    public abstract String toJson(Object object, boolean pretty);
+
+    public String toJson(Object object) {
+        return toJson(object, false);
+    }
 
     public abstract <T> T parse(String json, Class<T> type);
 
@@ -34,4 +52,5 @@ public abstract class Json {
         this.datePattern = datePattern;
         return this;
     }
+
 }

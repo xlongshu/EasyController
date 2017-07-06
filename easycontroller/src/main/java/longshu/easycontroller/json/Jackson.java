@@ -35,11 +35,12 @@ public class Jackson extends Json {
         return objectMapper;
     }
 
-    public static String toJson(Object object, boolean pretty) {
+    @Override
+    public String toJson(Object object, boolean pretty) {
         ObjectMapper objectMapper = getObjectMapper();
 
         if (!isInitDatePattern) {
-            datePattern = defaultJson.getDatePattern() == null ? defaultDatePattern : defaultJson.getDatePattern();
+            datePattern = datePattern == null ? defaultDatePattern : datePattern;
             isInitDatePattern = true;
         }
 
@@ -57,11 +58,6 @@ public class Jackson extends Json {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public String toJson(Object object) {
-        return toJson(object, false);
     }
 
     @Override

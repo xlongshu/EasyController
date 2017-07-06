@@ -30,17 +30,13 @@ public class FastJson extends Json {
         FastJson.prettyFeatures = prettyFeatures;
     }
 
-    public static String toJson(Object object, boolean pretty) {
-        String dp = defaultJson.getDatePattern() == null ? defaultDatePattern : defaultJson.getDatePattern();
+    @Override
+    public String toJson(Object object, boolean pretty) {
+        String dp = datePattern == null ? defaultDatePattern : datePattern;
         if (pretty) {
             return JSON.toJSONStringWithDateFormat(object, dp, prettyFeatures);
         }
         return JSON.toJSONStringWithDateFormat(object, dp, defaultFeatures);
-    }
-
-    @Override
-    public String toJson(Object object) {
-        return toJson(object, false);
     }
 
     @Override
