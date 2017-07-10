@@ -15,8 +15,8 @@ import java.text.SimpleDateFormat;
  */
 public class Jackson extends Json {
 
-    private static String datePattern;
-    private static boolean isInitDatePattern;
+    // ThreadLocal<DateFormat> 使用
+    private static String _datePattern;
 
     /**
      * SimpleDateFormat创建成本高,所以静态成员化,配合ThreadLocal解决线程安全问题
@@ -24,7 +24,7 @@ public class Jackson extends Json {
     private static ThreadLocal<DateFormat> dateFormat = new ThreadLocal<DateFormat>() {
         @Override
         protected synchronized DateFormat initialValue() {
-            return new SimpleDateFormat(datePattern);
+            return new SimpleDateFormat(_datePattern);
         }
     };
 
@@ -39,11 +39,10 @@ public class Jackson extends Json {
     public String toJson(Object object, boolean pretty) {
         ObjectMapper objectMapper = getObjectMapper();
 
-        if (!isInitDatePattern) {
-            datePattern = datePattern == null ? defaultDatePattern : datePattern;
-            isInitDatePattern = true;
+        if (_datePattern == null) {
+            _datePattern = datePattern == null ? defaultDatePattern : datePattern;
         }
-
+        // setDatePattern()表示使用DateFormat
         if (datePattern != null) {
             DateFormat format = Jackson.dateFormat.get();
             objectMapper.setDateFormat(format);
