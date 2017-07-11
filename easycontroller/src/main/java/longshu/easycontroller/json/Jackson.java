@@ -24,7 +24,7 @@ public class Jackson extends Json {
     private static ThreadLocal<DateFormat> dateFormat = new ThreadLocal<DateFormat>() {
         @Override
         protected synchronized DateFormat initialValue() {
-            return new SimpleDateFormat(_datePattern);
+            return new SimpleDateFormat(_datePattern == null ? defaultDatePattern : _datePattern);
         }
     };
 
@@ -33,6 +33,10 @@ public class Jackson extends Json {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)// null属性值不映射
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);//有属性不能映射的时候不报错
         return objectMapper;
+    }
+
+    public static DateFormat getDateFormat() {
+        return dateFormat.get();
     }
 
     @Override

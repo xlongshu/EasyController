@@ -1,12 +1,9 @@
 package longshu.easycontroller.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * DateUtils
@@ -25,7 +22,7 @@ public final class DateUtil {
     private static ThreadLocal<DateFormat> defaultDateFormat = new ThreadLocal<DateFormat>() {
         @Override
         protected synchronized DateFormat initialValue() {
-            return new SimpleDateFormat(DATE_PATTERN, Locale.SIMPLIFIED_CHINESE);
+            return new SimpleDateFormat(DATE_PATTERN);
         }
     };
 
@@ -38,7 +35,7 @@ public final class DateUtil {
     }
 
     public static Date parseDate(String dateStr, String pattern) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.SIMPLIFIED_CHINESE);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try {
             return dateFormat.parse(dateStr);
         } catch (ParseException ignored) {
@@ -51,19 +48,21 @@ public final class DateUtil {
     }
 
     public static String toStr(Date date, String format) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.SIMPLIFIED_CHINESE);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
 
     public static synchronized void setDateFormat(String dateFormat) {
-        if (StringUtils.isBlank(dateFormat))
-            throw new IllegalArgumentException("timeFormat can not be blank.");
+        if (dateFormat == null || dateFormat.isEmpty()) {
+            throw new IllegalArgumentException("dateFormat can not be blank.");
+        }
         DateUtil.dateFormat = dateFormat;
     }
 
     public static synchronized void setTimeFormat(String timeFormat) {
-        if (StringUtils.isBlank(dateFormat))
+        if (timeFormat == null || timeFormat.isEmpty()) {
             throw new IllegalArgumentException("dateFormat can not be blank.");
+        }
         DateUtil.timeFormat = timeFormat;
     }
 

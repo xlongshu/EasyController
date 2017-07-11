@@ -19,7 +19,7 @@ public abstract class Json {
     @Getter
     @Setter
     @NonNull
-    protected static String defaultDatePattern;
+    protected static String defaultDatePattern = "yyyy-MM-dd HH:mm:ss";
     protected String datePattern = null;
 
     static {
