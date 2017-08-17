@@ -48,7 +48,7 @@
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-io.version>2.5</commons-io.version>
 
-        <!-- 数据库驱动 -->
+        <!-- JDBC Driver -->
         <mysql.version>5.1.39</mysql.version>
         <sqlite.version>3.15.1</sqlite.version>
         <h2.version>1.4.193</h2.version>
@@ -57,6 +57,10 @@
         <!-- mybatis -->
         <mybatis.version>3.4.1</mybatis.version>
         <mybatis-guice.version>3.8</mybatis-guice.version>
+
+        <!-- Template -->
+        <freemarker.version>2.3.23</freemarker.version>
+        <velocity.version>1.7</velocity.version>
     </properties>
 
     <dependencies>
@@ -118,6 +122,17 @@
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
                 <version>${guice.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
             </dependency>
 
             <dependency>

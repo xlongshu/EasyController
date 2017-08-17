@@ -17,11 +17,17 @@ public abstract class AbstractUrlView extends AbstractView {
 
     public String getUrl() {
         if (null == url) {
-            if (view.endsWith(Constants.me().getViewExtension())) {
+            // jsp可以和其他模板引擎共存
+            if (view.endsWith(".jsp") || view.endsWith(Constants.me().getViewExtension())) {
                 url = view;
-            } else {
-                url = view + Constants.me().getViewExtension();
+                return url;
             }
+            if (JspView.class.equals(getClass())) {
+                url = view + ".jsp";
+                return url;
+            }
+
+            url = view + Constants.me().getViewExtension();
         }
         return url;
     }

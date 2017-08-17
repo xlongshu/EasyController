@@ -5,6 +5,7 @@ import longshu.easycontroller.core.config.ActionConfig;
 import longshu.easycontroller.core.config.ActionMapping;
 import longshu.easycontroller.core.config.Constants;
 import longshu.easycontroller.core.config.Interceptors;
+import longshu.easycontroller.core.view.FreeMarkerView;
 import longshu.easycontroller.core.view.ViewType;
 import longshu.easycontroller.demo.controller.IndexController;
 import longshu.easycontroller.demo.controller.TestController;
@@ -23,6 +24,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.Reader;
 import java.sql.Connection;
+import java.util.Locale;
 
 /**
  * DemoConfig
@@ -37,7 +39,10 @@ public class DemoConfig extends ActionConfig {
         prop = loadPropertyFile("demo.properties");
         me.setDevMode(getPropToBoolean("devMode", false));
         me.setViewType(ViewType.JSP);
-        me.setViewExtension(".jsp");
+        me.setViewExtension(".html");// 模板引擎使用,可以共存
+
+        // 测试模板
+        FreeMarkerView.getConfig().setLocale(Locale.CHINA);
 
         // 指定json实现
         me.setDefaultJson(new FastJson().setDatePattern(DateUtil.DATE_PATTERN));

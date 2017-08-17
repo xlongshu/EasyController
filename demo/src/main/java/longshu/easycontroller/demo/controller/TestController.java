@@ -88,4 +88,14 @@ public class TestController extends Controller {
         return getViewFactory().getFileView(new File(Constants.me().getWebRootPath(), "index.jsp"));
     }
 
+    public Object freemarker() {
+        request.setAttribute("template", "FreeMarker");
+        return getViewFactory().getFreeMarkerView("/WEB-INF/template/freemarker.html");
+    }
+
+    public Object velocity() {
+        request.setAttribute("template", "Velocity");
+        return getViewFactory().getVelocityView("/WEB-INF/template/velocity.html");
+    }
+
 }

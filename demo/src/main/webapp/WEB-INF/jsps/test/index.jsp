@@ -22,6 +22,8 @@
         <li><a href="${base}/test/json2" target="_blank">json2</a></li>
         <li><a href="${base}/test/file" target="_blank">file</a></li>
         <li><a href="${base}/test/file2" target="_blank">file2</a></li>
+        <li><a href="${base}/test/freemarker" target="_blank">freemarker</a></li>
+        <li><a href="${base}/test/velocity" target="_blank">velocity</a></li>
     </ul>
 </div>
 <hr/>

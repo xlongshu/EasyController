@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
  * FreeMarkerView, VelocityView
  *
  * @author LongShu 2017/05/11
+ * @see longshu.easycontroller.core.view.FreeMarkerView
+ * @see longshu.easycontroller.core.view.VelocityView
  */
 public abstract class AbstractTemplateView extends AbstractUrlView {
 

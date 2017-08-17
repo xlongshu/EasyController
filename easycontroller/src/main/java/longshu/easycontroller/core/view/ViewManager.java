@@ -66,7 +66,7 @@ public class ViewManager {
     private void initFreeMarkerView() {
         try {
             Class.forName("freemarker.template.Template");  // detect freemarker
-            // TODO
+            FreeMarkerView.init(servletContext);
         } catch (ClassNotFoundException e) {
             log.info("freemarker can not be supported!");
         }
@@ -75,7 +75,7 @@ public class ViewManager {
     private void initVelocityView() {
         try {
             Class.forName("org.apache.velocity.VelocityContext");
-            // TODO
+            VelocityView.init(servletContext);
         } catch (ClassNotFoundException e) {
             log.info("Velocity can not be supported!");
         }

@@ -12,7 +12,7 @@ import java.io.PrintWriter;
  */
 @lombok.Getter
 @lombok.Setter
-public class ErrorView extends AbstractUrlView {
+public class ErrorView extends AbstractView {
 
     /**
      * @see HttpServletResponse SC_XXX
@@ -29,7 +29,7 @@ public class ErrorView extends AbstractUrlView {
         response.setStatus(getErrorCode());
 
         if (null != view) {
-            ViewManager.me().getViewFactory().getView(getUrl()).render(request, response);
+            ViewManager.me().getViewFactory().getView(view).render(request, response);
             return;
         }
 
